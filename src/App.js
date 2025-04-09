@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
+import DashboardPage from "./pages/DashboardPage";
+import AddPatientPage from "./pages/AddPatientPage";
+import PatientDetailPage from "./pages/PatientDetailPage";
+import DietPlansPage from "./pages/DietPlansPage";
+import PrivateRoute from "./components/PrivateRoute";
+import SidebarLayout from "./components/SidebarLayout";
+import AppointmentPage from "./pages/AppointmentPage";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Router>
+      <Routes>
+        {/* Giriş Sayfası */}
+        <Route path="/" element={<LoginPage />} />
+
+        {/* Giriş yaptıktan sonra erişilen bölümler */}
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <SidebarLayout />
+            </PrivateRoute>
+          }
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Route
+            path="appointments"
+            element={
+              <PrivateRoute>
+                <AppointmentPage />
+              </PrivateRoute>
+            }
+          />
+          <Route path="dashboard" element={<DashboardPage />} />
+          <Route path="add-patient" element={<AddPatientPage />} />
+          <Route path="patient/:id" element={<PatientDetailPage />} />
+          <Route path="diet-plans" element={<DietPlansPage />} />
+        </Route>
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
