@@ -8,6 +8,7 @@ import DietPlansPage from "./pages/DietPlansPage";
 import PrivateRoute from "./components/PrivateRoute";
 import SidebarLayout from "./components/SidebarLayout";
 import AppointmentPage from "./pages/AppointmentPage";
+import StatisticsPage from "./pages/StatisticPage";
 
 const App = () => {
   return (
@@ -30,6 +31,14 @@ const App = () => {
             element={
               <PrivateRoute>
                 <AppointmentPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="statistics"
+            element={
+              <PrivateRoute>
+                <StatisticsPage />
               </PrivateRoute>
             }
           />

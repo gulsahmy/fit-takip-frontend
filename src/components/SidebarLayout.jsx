@@ -12,6 +12,8 @@ const SidebarLayout = () => {
             <Nav.Link as={Link} to="/dashboard">🏥 Hasta Paneli</Nav.Link>
             <Nav.Link as={Link} to="/diet-plans">🥗 Diyet Listeleri</Nav.Link>
             <Nav.Link as={Link} to="/appointments">📅 Randevular</Nav.Link>
+            <Nav.Link as={Link} to="/statistics">📊 İstatistikler</Nav.Link>
+
 
             {/* İleride buraya yeni sayfalar eklenebilir */}
           </Nav>

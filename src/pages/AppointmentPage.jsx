@@ -1,14 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { Container, Form, Button, ListGroup, Row, Col, Modal } from "react-bootstrap";
+import {
+  Container,
+  Form,
+  Button,
+  ListGroup,
+  Row,
+  Col,
+  Modal,
+} from "react-bootstrap";
 import axios from "axios";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
 const AppointmentPage = () => {
   const [appointments, setAppointments] = useState([]);
-  const [formData, setFormData] = useState({ patientName: "", date: "", note: "" });
+  const [formData, setFormData] = useState({
+    patientName: "",
+    date: "",
+    note: "",
+  });
   const [editId, setEditId] = useState(null);
   const [showModal, setShowModal] = useState(false);
-
-
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   // Randevuları getir
   const fetchAppointments = async () => {
@@ -34,7 +47,8 @@ const AppointmentPage = () => {
 
   // Randevu sil
   const handleDelete = async (id) => {
-    if (!window.confirm("Bu randevuyu silmek istediğinize emin misiniz?")) return;
+    if (!window.confirm("Bu randevuyu silmek istediğinize emin misiniz?"))
+      return;
     await axios.delete(`http://localhost:5000/api/appointments/${id}`);
     fetchAppointments();
   };
@@ -42,24 +56,26 @@ const AppointmentPage = () => {
   // Güncelleme başlat
   const handleEdit = (appt) => {
     setEditId(appt._id);
-  
+
     const formattedDate = new Date(appt.date).toISOString().slice(0, 16);
-  
+
     setFormData({
       patientName: appt.patientName,
       date: formattedDate,
       note: appt.note,
     });
-  
+
     setShowModal(true);
   };
-  
 
   // Güncelleme işlemi
   const handleUpdate = async () => {
     console.log("Güncelleniyor:", formData);
     try {
-      await axios.put(`http://localhost:5000/api/appointments/${editId}`, formData);
+      await axios.put(
+        `http://localhost:5000/api/appointments/${editId}`,
+        formData
+      );
       setShowModal(false);
       setEditId(null);
       setFormData({ patientName: "", date: "", note: "" });
@@ -82,7 +98,9 @@ const AppointmentPage = () => {
               type="text"
               name="patientName"
               value={formData.patientName}
-              onChange={(e) => setFormData({ ...formData, patientName: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, patientName: e.target.value })
+              }
               required
             />
           </Col>
@@ -92,7 +110,9 @@ const AppointmentPage = () => {
               type="datetime-local"
               name="date"
               value={formData.date}
-              onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, date: e.target.value })
+              }
               required
             />
           </Col>
@@ -102,7 +122,9 @@ const AppointmentPage = () => {
               type="text"
               name="note"
               value={formData.note}
-              onChange={(e) => setFormData({ ...formData, note: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, note: e.target.value })
+              }
             />
           </Col>
           <Col md={1}>
@@ -113,12 +135,16 @@ const AppointmentPage = () => {
         </Row>
       </Form>
 
+      
       <hr />
 
       {/* Randevu Listesi */}
       <ListGroup>
         {appointments.map((appt) => (
-          <ListGroup.Item key={appt._id} className="d-flex justify-content-between align-items-start">
+          <ListGroup.Item
+            key={appt._id}
+            className="d-flex justify-content-between align-items-start"
+          >
             <div>
               <strong>{appt.patientName}</strong> –{" "}
               <span className="text-muted">
@@ -127,10 +153,19 @@ const AppointmentPage = () => {
               <div>{appt.note}</div>
             </div>
             <div>
-              <Button variant="primary" size="sm" className="me-2" onClick={() => handleEdit(appt)}>
+              <Button
+                variant="primary"
+                size="sm"
+                className="me-2"
+                onClick={() => handleEdit(appt)}
+              >
                 Güncelle
               </Button>
-              <Button variant="danger" size="sm" onClick={() => handleDelete(appt._id)}>
+              <Button
+                variant="danger"
+                size="sm"
+                onClick={() => handleDelete(appt._id)}
+              >
                 Sil
               </Button>
             </div>
@@ -150,7 +185,9 @@ const AppointmentPage = () => {
               <Form.Control
                 type="text"
                 value={formData.patientName}
-                onChange={(e) => setFormData({ ...formData, patientName: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, patientName: e.target.value })
+                }
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -158,7 +195,9 @@ const AppointmentPage = () => {
               <Form.Control
                 type="datetime-local"
                 value={formData.date}
-                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, date: e.target.value })
+                }
               />
             </Form.Group>
             <Form.Group>
@@ -166,7 +205,9 @@ const AppointmentPage = () => {
               <Form.Control
                 type="text"
                 value={formData.note}
-                onChange={(e) => setFormData({ ...formData, note: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, note: e.target.value })
+                }
               />
             </Form.Group>
           </Form>
@@ -180,6 +221,32 @@ const AppointmentPage = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      <h5 className="mt-4">📅 Takvim</h5>
+      <Calendar onChange={setSelectedDate} value={selectedDate} />
+
+      <h6 className="mt-3">
+        📝 {selectedDate.toLocaleDateString("tr-TR")} tarihli randevular:
+      </h6>
+      <ListGroup>
+        {appointments
+          .filter(
+            (appt) =>
+              new Date(appt.date).toDateString() === selectedDate.toDateString()
+          )
+          .map((appt) => (
+            <ListGroup.Item key={appt._id}>
+              <strong>{appt.patientName}</strong> - 🕒{" "}
+              {new Date(appt.date).toLocaleTimeString("tr-TR", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+              <br />
+              <small>{appt.note}</small>
+            </ListGroup.Item>
+          ))}
+      </ListGroup>
+
     </Container>
   );
 };

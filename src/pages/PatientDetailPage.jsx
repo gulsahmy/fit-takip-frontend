@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Card, Form, Button, Alert } from "react-bootstrap";
+import { Container, Card, Form, Button, Alert, ListGroup } from "react-bootstrap";
 import axios from "axios";
 
 const PatientDetailPage = () => {
@@ -15,6 +15,7 @@ const PatientDetailPage = () => {
 
   const [bmi, setBmi] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [appointments, setAppointments] = useState([]);
 
   // Hasta verilerini getir
   useEffect(() => {
@@ -37,6 +38,19 @@ const PatientDetailPage = () => {
     fetchPatient();
   }, [id]);
 
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      const res = await axios.get(
+        `http://localhost:5000/api/appointments?patientName=${formData.name}`
+      );
+      setAppointments(res.data);
+    };
+
+    if (formData.name) {
+      fetchAppointments();
+    }
+  }, [formData.name]);
+
   // Değişiklikleri takip et
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -50,7 +64,10 @@ const PatientDetailPage = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.put(`http://localhost:5000/api/patients/${id}`, formData);
+      const res = await axios.put(
+        `http://localhost:5000/api/patients/${id}`,
+        formData
+      );
       setBmi(res.data.bmi);
       setSuccess(true);
     } catch (err) {
@@ -119,6 +136,23 @@ const PatientDetailPage = () => {
               <Form.Label>Beden Kitle İndeksi (BMI)</Form.Label>
               <Form.Control type="text" value={bmi || "-"} disabled />
             </Form.Group>
+
+            <h5 className="mt-4">📅 Bu Hastaya Ait Randevular</h5>
+            <ListGroup>
+              {appointments.length === 0 ? (
+                <ListGroup.Item>
+                  Bu hastaya ait randevu bulunamadı.
+                </ListGroup.Item>
+              ) : (
+                appointments.map((appt) => (
+                  <ListGroup.Item key={appt._id}>
+                    🕒 {new Date(appt.date).toLocaleString("tr-TR")}
+                    <br />
+                    📝 {appt.note || "Açıklama yok"}
+                  </ListGroup.Item>
+                ))
+              )}
+            </ListGroup>
 
             <Button type="submit" variant="primary">
               Güncelle
