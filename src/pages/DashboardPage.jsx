@@ -5,6 +5,7 @@ import axios from "axios";
 import { Form } from "react-bootstrap";
 
 const DashboardPage = () => {
+  
   const [patients, setPatients] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -32,22 +33,13 @@ const DashboardPage = () => {
     }
   };
 
-  // ✅ Çıkış işlemi
-  const handleLogout = () => {
-    localStorage.removeItem("isLoggedIn");
-    window.location.href = "/"; // login sayfasına yönlendir
-  };
+  
 
   return (
     <Container className="mt-5">
-      <h2 className="mb-4 text-center">Diyetisyen Paneli</h2>
+      
 
-      {/* ✅ Çıkış Butonu */}
-      <div className="text-end mb-3">
-        <Button variant="secondary" onClick={handleLogout}>
-          Çıkış Yap
-        </Button>
-      </div>
+      <h2 className="mb-4 text-center">Diyetisyen Paneli</h2>
 
       <Form.Control
         type="text"

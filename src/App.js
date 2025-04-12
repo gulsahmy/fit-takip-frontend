@@ -9,6 +9,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import SidebarLayout from "./components/SidebarLayout";
 import AppointmentPage from "./pages/AppointmentPage";
 import StatisticsPage from "./pages/StatisticPage";
+import RegisterPage from "./pages/RegisterPage"
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
       <Routes>
         {/* Giriş Sayfası */}
         <Route path="/" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
 
         {/* Giriş yaptıktan sonra erişilen bölümler */}
         <Route

@@ -69,7 +69,7 @@ const DietPlansPage = () => {
             />
           </Col>
           <Col md={5}>
-            <Form.Label>Açıklama (isteğe bağlı)</Form.Label>
+            <Form.Label>Açıklama</Form.Label>
             <Form.Control
               type="text"
               placeholder="Kahvaltı, öğle, akşam öğünleri"
