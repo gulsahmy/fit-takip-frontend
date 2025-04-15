@@ -9,7 +9,10 @@ import PrivateRoute from "./components/PrivateRoute";
 import SidebarLayout from "./components/SidebarLayout";
 import AppointmentPage from "./pages/AppointmentPage";
 import StatisticsPage from "./pages/StatisticPage";
-import RegisterPage from "./pages/RegisterPage"
+import RegisterPage from "./pages/RegisterPage";
+import StaffOperations from "./pages/StaffOperations";
+import Accounting from "./pages/Accounting";
+import SystemSettings from "./pages/SystemSettings";
 
 const App = () => {
   return (
@@ -48,6 +51,9 @@ const App = () => {
           <Route path="add-patient" element={<AddPatientPage />} />
           <Route path="patient/:id" element={<PatientDetailPage />} />
           <Route path="diet-plans" element={<DietPlansPage />} />
+          <Route path="/staff" element={<StaffOperations />} />
+          <Route path="/accounting" element={<Accounting />} />
+          <Route path="/settings" element={<SystemSettings />} />
         </Route>
       </Routes>
     </Router>
