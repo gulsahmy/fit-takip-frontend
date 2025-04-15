@@ -57,7 +57,7 @@ const SidebarLayout = () => {
                 className="fw-bold text-center"
                 style={{
                   fontSize: "3rem",
-                  textShadow: "2px 2px 4px rgba(221, 17, 167, 0.6)",
+                  textShadow: "2px 2px 4px #dd11a7",
                 }}
               >
                 FitTakip
