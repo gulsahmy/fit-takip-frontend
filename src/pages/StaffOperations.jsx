@@ -17,7 +17,6 @@ const StaffOperations = () => {
   const [editId, setEditId] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  // Verileri API'den çek
   useEffect(() => {
     const fetchStaff = async () => {
       try {
@@ -30,7 +29,6 @@ const StaffOperations = () => {
     fetchStaff();
   }, []);
 
-  // Yeni personel ekleme
   const handleAdd = async (e) => {
     e.preventDefault();
     try {
@@ -42,7 +40,6 @@ const StaffOperations = () => {
     }
   };
 
-  // Silme işlemi
   const handleDelete = async (id) => {
     if (!window.confirm("Bu personeli silmek istediğinize emin misiniz?")) return;
     try {
@@ -53,14 +50,12 @@ const StaffOperations = () => {
     }
   };
 
-  // Güncelleme başlat
   const handleEdit = (staff) => {
     setEditId(staff._id);
     setFormData({ name: staff.name, role: staff.role, phone: staff.phone });
     setShowModal(true);
   };
 
-  // Güncelleme işlemi
   const handleUpdate = async () => {
     try {
       const res = await axios.put(`http://localhost:5000/api/staff/${editId}`, formData);
@@ -75,133 +70,155 @@ const StaffOperations = () => {
   };
 
   return (
-    <Container className="mt-5">
-      <h3 className="mb-4 d-flex align-items-center">
-        <FaUsers style={{ color: "#dd11a7", fontSize: "1.8rem", marginRight: "10px" }} />
-        Personel İşlemleri
-      </h3>
+    <div style={{ backgroundColor: "#F5F5F5", minHeight: "100vh", paddingTop: "40px" }}>
+      <Container>
+        <h3 className="mb-4 d-flex align-items-center" style={{ color: "#4CAF50" }}>
+          <FaUsers style={{ fontSize: "1.8rem", marginRight: "10px" }} />
+          Personel İşlemleri
+        </h3>
 
-      {/* Ekleme Formu */}
-      <Form onSubmit={handleAdd}>
-        <Row className="align-items-end">
-          <Col md={4}>
-            <Form.Label>Ad Soyad</Form.Label>
-            <Form.Control
-              type="text"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              required
-            />
-          </Col>
-          <Col md={4}>
-            <Form.Label>Görev</Form.Label>
-            <Form.Control
-              type="text"
-              value={formData.role}
-              onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-              required
-            />
-          </Col>
-          <Col md={3}>
-            <Form.Label>Telefon</Form.Label>
-            <Form.Control
-              type="text"
-              value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              required
-            />
-          </Col>
-          <Col md={1}>
-            <Button type="submit" variant="success" className="w-100">
-              <FaUserPlus />
-            </Button>
-          </Col>
-        </Row>
-      </Form>
-
-      <hr />
-
-      {/* Liste */}
-      <Table striped bordered hover className="mt-3">
-      <thead>
-    <tr>
-      <th style={{ width: "25%" }}>Ad Soyad</th>
-      <th style={{ width: "25%" }}>Görev</th>
-      <th style={{ width: "25%" }}>Telefon</th>
-      <th style={{ width: "25%" }}>İşlemler</th>
-    </tr>
-  </thead>
-        <tbody>
-          {staffList.map((staff) => (
-            <tr key={staff._id}>
-              <td>{staff.name}</td>
-              <td>{staff.role}</td>
-              <td>{staff.phone}</td>
-              <td className="text-end">
-                <Button
-                  variant="primary"
-                  size="sm"
-                  className="me-2"
-                  onClick={() => handleEdit(staff)}
-                >
-                  Güncelle
-                </Button>
-                <Button
-                  variant="danger"
-                  size="sm"
-                  onClick={() => handleDelete(staff._id)}
-                >
-                  Sil
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-
-      {/* Güncelleme Modalı */}
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Personeli Güncelle</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3">
+        <Form onSubmit={handleAdd}>
+          <Row className="align-items-end">
+            <Col md={4}>
               <Form.Label>Ad Soyad</Form.Label>
               <Form.Control
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                required
               />
-            </Form.Group>
-            <Form.Group className="mb-3">
+            </Col>
+            <Col md={4}>
               <Form.Label>Görev</Form.Label>
               <Form.Control
                 type="text"
                 value={formData.role}
                 onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                required
               />
-            </Form.Group>
-            <Form.Group>
+            </Col>
+            <Col md={3}>
               <Form.Label>Telefon</Form.Label>
               <Form.Control
                 type="text"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                required
               />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Vazgeç
-          </Button>
-          <Button variant="primary" onClick={handleUpdate}>
-            Kaydet
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </Container>
+            </Col>
+            <Col md={1}>
+              <Button
+                type="submit"
+                className="w-100"
+                style={{
+                  backgroundColor: "#4CAF50",
+                  borderColor: "#4CAF50",
+                  color: "#fff",
+                }}
+              >
+                <FaUserPlus />
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+
+        <hr />
+
+        <Table bordered hover responsive className="mt-3 bg-white shadow-sm">
+          <thead>
+            <tr>
+              <th style={{ width: "25%" }}>Ad Soyad</th>
+              <th style={{ width: "25%" }}>Görev</th>
+              <th style={{ width: "25%" }}>Telefon</th>
+              <th style={{ width: "25%" }}>İşlemler</th>
+            </tr>
+          </thead>
+          <tbody>
+            {staffList.map((staff) => (
+              <tr key={staff._id}>
+                <td>{staff.name}</td>
+                <td>{staff.role}</td>
+                <td>{staff.phone}</td>
+                <td className="text-end">
+                  <Button
+                    size="sm"
+                    className="me-2"
+                    style={{
+                      backgroundColor: "#1976D2",
+                      borderColor: "#1976D2",
+                      color: "#fff",
+                    }}
+                    onClick={() => handleEdit(staff)}
+                  >
+                    Güncelle
+                  </Button>
+                  <Button
+                    size="sm"
+                    style={{
+                      backgroundColor: "#E53935",
+                      borderColor: "#E53935",
+                      color: "#fff",
+                    }}
+                    onClick={() => handleDelete(staff._id)}
+                  >
+                    Sil
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+
+        <Modal show={showModal} onHide={() => setShowModal(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Personeli Güncelle</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Label>Ad Soyad</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Görev</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={formData.role}
+                  onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Telefon</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowModal(false)}>
+              Vazgeç
+            </Button>
+            <Button
+              onClick={handleUpdate}
+              style={{
+                backgroundColor: "#1976D2",
+                borderColor: "#1976D2",
+                color: "#fff",
+              }}
+            >
+              Kaydet
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </Container>
+    </div>
   );
 };
 

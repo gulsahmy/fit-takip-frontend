@@ -11,7 +11,6 @@ import {
   Alert,
   Carousel,
 } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -33,141 +32,173 @@ const RegisterPage = () => {
   };
 
   return (
-    <Container fluid className="p-0" style={{ height: "100vh", overflow: "hidden" }}>
-      <Row className="g-0 h-100">
-        {/* SOL TARAF: Carousel */}
-        <Col
-          md={7}
-          className="d-none d-md-flex justify-content-center align-items-center bg-dark"
-          style={{ height: "100%" }}
-        >
-          <div
-            style={{
-              width: "90%",
-              maxWidth: "500px",
-              height: "400px",
-              overflow: "hidden",
-            }}
+    <div
+      style={{
+        backgroundColor: "#F5F5F5",
+        height: "100vh",
+        overflow: "hidden",
+      }}
+    >
+      <Container 
+      fluid 
+      className="p-0"
+      style={{ height: "100vh", overflow: "hidden" }}
+      >
+        <Row className="g-0 h-100">
+          {/* SOL: Carousel */}
+          <Col
+            md={7}
+            className="d-none d-md-flex justify-content-center align-items-center bg-dark"
           >
-            <Carousel fade interval={3000} controls={false} indicators={false}>
-              <Carousel.Item style={{ height: "400px" }}>
-                <img
-                  className="d-block w-100 h-100 rounded"
-                  src="./img/img5.jpg"
-                  alt="Sağlıklı Beslenme"
-                  style={{ objectFit: "cover" }}
-                />
-                <Carousel.Caption
-                  style={{
-                    backgroundColor: "rgba(255,255,255,0.7)",
-                    color: "#000",
-                    borderRadius: "8px",
-                    padding: "10px",
-                  }}
-                >
-                  <h5>Sağlıklı Beslenme</h5>
-                  <p>Dengeli bir yaşam için doğru beslenme şart.</p>
-                </Carousel.Caption>
-              </Carousel.Item>
-              <Carousel.Item style={{ height: "400px" }}>
-                <img
-                  className="d-block w-100 h-100 rounded"
-                  src="./img/diyet-plan.jpg"
-                  alt="Diyet Planı"
-                  style={{ objectFit: "cover" }}
-                />
-                <Carousel.Caption
-                  style={{
-                    backgroundColor: "rgba(255,255,255,0.7)",
-                    color: "#000",
-                    borderRadius: "8px",
-                    padding: "10px",
-                  }}
-                >
-                  <h5>Kişiye Özel Diyet</h5>
-                  <p>Her bireyin ihtiyacı farklıdır.</p>
-                </Carousel.Caption>
-              </Carousel.Item>
-              <Carousel.Item style={{ height: "400px" }}>
-                <img
-                  className="d-block w-100 h-100 rounded"
-                  src="./img/spor.jpg"
-                  alt="Aktif Yaşam"
-                  style={{ objectFit: "cover" }}
-                />
-                <Carousel.Caption
-                  style={{
-                    backgroundColor: "rgba(255,255,255,0.7)",
-                    color: "#000",
-                    borderRadius: "8px",
-                    padding: "10px",
-                  }}
-                >
-                  <h5>Aktif Yaşam</h5>
-                  <p>Sağlıklı bir vücut için hareket şart.</p>
-                </Carousel.Caption>
-              </Carousel.Item>
-            </Carousel>
-          </div>
-        </Col>
+            <div
+              style={{
+                width: "90%",
+                maxWidth: "500px",
+                height: "400px",
+                overflow: "hidden",
+              }}
+            >
+              <Carousel
+                fade
+                interval={3000}
+                controls={false}
+                indicators={false}
+              >
+                <Carousel.Item style={{ height: "400px" }}>
+                  <img
+                    className="d-block w-100 h-100 rounded"
+                    src="/img/img5.jpg"
+                    alt="Sağlıklı Beslenme"
+                    style={{ objectFit: "cover" }}
+                  />
+                  <Carousel.Caption
+                    style={{
+                      backgroundColor: "rgba(255,255,255,0.75)",
+                      color: "#000",
+                      borderRadius: "8px",
+                      padding: "10px",
+                    }}
+                  >
+                    <h5>Sağlıklı Beslenme</h5>
+                    <p>Dengeli bir yaşam için doğru beslenme şart.</p>
+                  </Carousel.Caption>
+                </Carousel.Item>
+                <Carousel.Item style={{ height: "400px" }}>
+                  <img
+                    className="d-block w-100 h-100 rounded"
+                    src="/img/diyet-plan.jpg"
+                    alt="Diyet Planı"
+                    style={{ objectFit: "cover" }}
+                  />
+                  <Carousel.Caption
+                    style={{
+                      backgroundColor: "rgba(255,255,255,0.75)",
+                      color: "#000",
+                      borderRadius: "8px",
+                      padding: "10px",
+                    }}
+                  >
+                    <h5>Kişiye Özel Diyet</h5>
+                    <p>Her bireyin ihtiyacı farklıdır.</p>
+                  </Carousel.Caption>
+                </Carousel.Item>
+                <Carousel.Item style={{ height: "400px" }}>
+                  <img
+                    className="d-block w-100 h-100 rounded"
+                    src="/img/spor.jpg"
+                    alt="Aktif Yaşam"
+                    style={{ objectFit: "cover" }}
+                  />
+                  <Carousel.Caption
+                    style={{
+                      backgroundColor: "rgba(255,255,255,0.75)",
+                      color: "#000",
+                      borderRadius: "8px",
+                      padding: "10px",
+                    }}
+                  >
+                    <h5>Aktif Yaşam</h5>
+                    <p>Sağlıklı bir vücut için hareket şart.</p>
+                  </Carousel.Caption>
+                </Carousel.Item>
+              </Carousel>
+            </div>
+          </Col>
 
-        {/* SAĞ TARAF: Form */}
-        <Col
-          md={5}
-          className="d-flex justify-content-center align-items-center bg-light"
-          style={{ height: "100%" }}
-        >
-          <Card style={{ width: "100%", maxWidth: "400px" }} className="p-4 shadow">
-            <h3 className="text-center mb-4">Kayıt Ol</h3>
-            <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3">
-                <Form.Label>Ad</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Adınızı girin"
-                  required
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                />
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Email adresinizi girin"
-                  required
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                />
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label>Şifre</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Şifrenizi girin"
-                  required
-                  onChange={(e) => setForm({ ...form, password: e.target.value })}
-                />
-              </Form.Group>
-
-              <Button type="submit" variant="success" className="w-100">
+          {/* SAĞ: Form */}
+          <Col
+            md={5}
+            className="d-flex justify-content-center align-items-center bg-light"
+          >
+            <Card
+              style={{ width: "100%", maxWidth: "400px" }}
+              className="p-4 shadow"
+            >
+              <h3 className="text-center mb-4" style={{ color: "#4CAF50" }}>
                 Kayıt Ol
-              </Button>
-            </Form>
+              </h3>
+              <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Ad</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Adınızı girin"
+                    required
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  />
+                </Form.Group>
 
-            {message && (
-              <Alert variant={error ? "danger" : "success"} className="mt-3">
-                {message}
-              </Alert>
-            )}
+                <Form.Group className="mb-3">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Email adresinizi girin"
+                    required
+                    onChange={(e) =>
+                      setForm({ ...form, email: e.target.value })
+                    }
+                  />
+                </Form.Group>
 
-            <p className="mt-3 text-center">
-              Zaten hesabın var mı? <Link to="/">Giriş Yap</Link>
-            </p>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+                <Form.Group className="mb-3">
+                  <Form.Label>Şifre</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Şifrenizi girin"
+                    required
+                    onChange={(e) =>
+                      setForm({ ...form, password: e.target.value })
+                    }
+                  />
+                </Form.Group>
+
+                <Button
+                  type="submit"
+                  className="w-100"
+                  style={{
+                    backgroundColor: "#4CAF50",
+                    borderColor: "#4CAF50",
+                    color: "#fff",
+                  }}
+                >
+                  Kayıt Ol
+                </Button>
+              </Form>
+
+              {message && (
+                <Alert variant={error ? "danger" : "success"} className="mt-3">
+                  {message}
+                </Alert>
+              )}
+
+              <p className="mt-3 text-center">
+                Zaten hesabın var mı? <Link to="/">Giriş Yap</Link>
+              </p>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 
