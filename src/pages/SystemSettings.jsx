@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Form, Button, Row, Col, Card, Alert } from "react-bootstrap";
 import { FaCogs } from "react-icons/fa";
-import axios from "axios";
+import axios from "../axios";
 
 const SystemSettings = () => {
   const [settings, setSettings] = useState({
@@ -16,7 +16,7 @@ const SystemSettings = () => {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/system-settings");
+        const res = await axios.get("/system-settings");
         if (res.data) {
           setSettings(res.data);
         }
@@ -36,7 +36,7 @@ const SystemSettings = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put("http://localhost:5000/api/system-settings", settings);
+      await axios.put("/system-settings", settings);
       setSuccess(true);
       setTimeout(() => setSuccess(false), 2000);
     } catch (err) {

@@ -8,7 +8,7 @@ import {
   Col,
   Modal,
 } from "react-bootstrap";
-import axios from "axios";
+import axios from "../axios";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
@@ -25,7 +25,7 @@ const AppointmentPage = () => {
 
   // Randevuları getir
   const fetchAppointments = async () => {
-    const res = await axios.get("http://localhost:5000/api/appointments");
+    const res = await axios.get("/appointments");
     setAppointments(res.data);
   };
 
@@ -37,7 +37,7 @@ const AppointmentPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/appointments", formData);
+      await axios.post("/appointments", formData);
       setFormData({ patientName: "", date: "", note: "" });
       fetchAppointments();
     } catch (err) {
@@ -49,7 +49,7 @@ const AppointmentPage = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Bu randevuyu silmek istediğinize emin misiniz?"))
       return;
-    await axios.delete(`http://localhost:5000/api/appointments/${id}`);
+    await axios.delete(`/appointments/${id}`);
     fetchAppointments();
   };
 
@@ -73,7 +73,7 @@ const AppointmentPage = () => {
     console.log("Güncelleniyor:", formData);
     try {
       await axios.put(
-        `http://localhost:5000/api/appointments/${editId}`,
+        `/appointments/${editId}`,
         formData
       );
       setShowModal(false);

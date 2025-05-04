@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Button, Container, Alert, Card } from "react-bootstrap";
-import axios from "axios";
+import axios from "../axios";
 
 const AddPatientPage = () => {
   const [formData, setFormData] = useState({
@@ -25,7 +25,7 @@ const AddPatientPage = () => {
     e.preventDefault();
 
     try {
-      await axios.post("http://localhost:5000/api/patients", formData);
+      await axios.post("/patients", formData);
       setShowSuccess(true);
       setFormData({
         name: "",

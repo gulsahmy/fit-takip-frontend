@@ -9,7 +9,7 @@ import {
   Card,
   Carousel,
 } from "react-bootstrap";
-import axios from "axios";
+import axios from "../axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const LoginPage = () => {
@@ -21,7 +21,7 @@ const LoginPage = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
+      const res = await axios.post("/auth/login", {
         email,
         password,
       });

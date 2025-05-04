@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Card, Row, Col } from "react-bootstrap";
-import axios from "axios";
+import axios from "../axios";
 
 const StatisticsPage = () => {
   const [patients, setPatients] = useState([]);
@@ -9,8 +9,8 @@ const StatisticsPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const [patientRes, appointmentRes] = await Promise.all([
-        axios.get("http://localhost:5000/api/patients"),
-        axios.get("http://localhost:5000/api/appointments"),
+        axios.get("/patients"),
+        axios.get("/appointments"),
       ]);
       setPatients(patientRes.data);
       setAppointments(appointmentRes.data);

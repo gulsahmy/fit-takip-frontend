@@ -8,7 +8,7 @@ import {
   Alert,
   ListGroup,
 } from "react-bootstrap";
-import axios from "axios";
+import axios from "../axios";
 
 const PatientDetailPage = () => {
   const { id } = useParams();
@@ -27,7 +27,7 @@ const PatientDetailPage = () => {
   useEffect(() => {
     const fetchPatient = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/patients/${id}`);
+        const res = await axios.get(`/patients/${id}`);
         setFormData({
           name: res.data.name || "",
           age: res.data.age || "",
@@ -47,7 +47,7 @@ const PatientDetailPage = () => {
   useEffect(() => {
     const fetchAppointments = async () => {
       const res = await axios.get(
-        `http://localhost:5000/api/appointments?patientName=${formData.name}`
+        `/appointments?patientName=${formData.name}`
       );
       setAppointments(res.data);
     };
@@ -69,7 +69,7 @@ const PatientDetailPage = () => {
     e.preventDefault();
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/patients/${id}`,
+        `/patients/${id}`,
         formData
       );
       setBmi(res.data.bmi);

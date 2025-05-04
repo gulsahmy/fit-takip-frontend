@@ -10,7 +10,7 @@ import {
   Card,
   Modal,
 } from "react-bootstrap";
-import axios from "axios";
+import axios from "../axios";
 
 const DietPlansPage = () => {
   const [dietPlans, setDietPlans] = useState([]);
@@ -22,7 +22,7 @@ const DietPlansPage = () => {
 
   const fetchPlans = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/diet-plans");
+      const res = await axios.get("/diet-plans");
       setDietPlans(res.data);
     } catch (err) {
       console.error("Liste alınamadı:", err);
@@ -38,7 +38,7 @@ const DietPlansPage = () => {
     if (!newTitle) return;
 
     try {
-      await axios.post("http://localhost:5000/api/diet-plans", {
+      await axios.post("/diet-plans", {
         title: newTitle,
         description,
       });
@@ -56,7 +56,7 @@ const DietPlansPage = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/api/diet-plans/${editId}`, {
+      await axios.put(`/diet-plans/${editId}`, {
         title: newTitle,
         description,
       });
@@ -73,7 +73,7 @@ const DietPlansPage = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Bu diyeti silmek istediğine emin misin?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/diet-plans/${id}`);
+      await axios.delete(`/diet-plans/${id}`);
       fetchPlans();
     } catch (err) {
       console.error("Silme hatası:", err);

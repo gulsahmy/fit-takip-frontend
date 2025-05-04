@@ -9,7 +9,7 @@ import {
   Modal,
 } from "react-bootstrap";
 import { FaUserPlus, FaUsers } from "react-icons/fa";
-import axios from "axios";
+import axios from "../axios";
 
 const StaffOperations = () => {
   const [staffList, setStaffList] = useState([]);
@@ -20,7 +20,7 @@ const StaffOperations = () => {
   useEffect(() => {
     const fetchStaff = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/staff");
+        const res = await axios.get("/staff");
         setStaffList(res.data);
       } catch (err) {
         console.error("Personel verisi alınamadı:", err);
@@ -32,7 +32,7 @@ const StaffOperations = () => {
   const handleAdd = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/staff", formData);
+      const res = await axios.post("/staff", formData);
       setStaffList([...staffList, res.data]);
       setFormData({ name: "", role: "", phone: "" });
     } catch (err) {
@@ -43,7 +43,7 @@ const StaffOperations = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Bu personeli silmek istediğinize emin misiniz?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/staff/${id}`);
+      await axios.delete(`/staff/${id}`);
       setStaffList(staffList.filter((staff) => staff._id !== id));
     } catch (err) {
       console.error("Silme hatası:", err);
@@ -58,7 +58,7 @@ const StaffOperations = () => {
 
   const handleUpdate = async () => {
     try {
-      const res = await axios.put(`http://localhost:5000/api/staff/${editId}`, formData);
+      const res = await axios.put(`/staff/${editId}`, formData);
       const updatedList = staffList.map((s) => (s._id === editId ? res.data : s));
       setStaffList(updatedList);
       setFormData({ name: "", role: "", phone: "" });

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Table, Form, Button, Row, Col } from "react-bootstrap";
 import { FaTrashAlt, FaMoneyBillWave } from "react-icons/fa";
-import axios from "axios";
+import axios from "../axios";
 
 const Accounting = () => {
   const [payments, setPayments] = useState([]);
@@ -16,7 +16,7 @@ const Accounting = () => {
   // Ödemeleri API'den çek
   const fetchPayments = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/payments");
+      const res = await axios.get("/payments");
       setPayments(res.data);
     } catch (err) {
       console.error("Ödeme listesi alınamadı:", err);
@@ -34,7 +34,7 @@ const Accounting = () => {
       if (editId) {
         // Güncelleme
         const res = await axios.put(
-          `http://localhost:5000/api/payments/${editId}`,
+          `/payments/${editId}`,
           formData
         );
         const updatedPayments = payments.map((p) =>
@@ -45,7 +45,7 @@ const Accounting = () => {
       } else {
         // Ekleme
         const res = await axios.post(
-          "http://localhost:5000/api/payments",
+          "/payments",
           formData
         );
         setPayments([...payments, res.data]);
@@ -61,7 +61,7 @@ const Accounting = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Bu kaydı silmek istediğine emin misin?")) return;
     try {
-      await axios.delete(`http://localhost:5000/api/payments/${id}`);
+      await axios.delete(`/payments/${id}`);
       setPayments(payments.filter((p) => p._id !== id));
     } catch (err) {
       console.error("Silme hatası:", err);
@@ -167,44 +167,52 @@ const Accounting = () => {
               </tr>
             </thead>
             <tbody>
-              {payments.map((p) => (
-                <tr key={p._id}>
-                  <td>{p.patientName}</td>
-                  <td>{p.date}</td>
-                  <td>{parseFloat(p.amount).toFixed(2)}</td>
-                  <td>{p.note}</td>
-                  <td className="text-end">
-                    <Button
-                      size="sm"
-                      variant="primary"
-                      className="me-2"
-                      onClick={() => {
-                        setFormData({
-                          patientName: p.patientName,
-                          date: p.date?.slice(0, 10),
-                          amount: p.amount,
-                          note: p.note,
-                        });
-                        setEditId(p._id);
-                      }}
-                    >
-                      Güncelle
-                    </Button>
+              {payments.length > 0 ? (
+                payments.map((p) => (
+                  <tr key={p._id}>
+                    <td>{p.patientName}</td>
+                    <td>{new Date(p.date).toLocaleDateString("tr-TR")}</td>
+                    <td>{parseFloat(p.amount).toFixed(2)}</td>
+                    <td>{p.note}</td>
+                    <td className="text-end">
+                      <Button
+                        size="sm"
+                        variant="primary"
+                        className="me-2"
+                        onClick={() => {
+                          setFormData({
+                            patientName: p.patientName,
+                            date: p.date?.slice(0, 10),
+                            amount: p.amount,
+                            note: p.note,
+                          });
+                          setEditId(p._id);
+                        }}
+                      >
+                        Güncelle
+                      </Button>
 
-                    <Button
-                      size="sm"
-                      style={{
-                        backgroundColor: "#E53935",
-                        borderColor: "#E53935",
-                        color: "#fff",
-                      }}
-                      onClick={() => handleDelete(p._id)}
-                    >
-                      <FaTrashAlt />
-                    </Button>
+                      <Button
+                        size="sm"
+                        style={{
+                          backgroundColor: "#E53935",
+                          borderColor: "#E53935",
+                          color: "#fff",
+                        }}
+                        onClick={() => handleDelete(p._id)}
+                      >
+                        <FaTrashAlt />
+                      </Button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5" className="text-center">
+                    Henüz ödeme kaydı bulunmamaktadır.
                   </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </Table>
         </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Card, Row, Col, Button, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import axios from "../axios";
 
 const DashboardPage = () => {
   const [patients, setPatients] = useState([]);
@@ -10,7 +10,7 @@ const DashboardPage = () => {
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/patients");
+        const response = await axios.get("/patients");
         setPatients(response.data);
       } catch (error) {
         console.error("Hastalar alınamadı:", error);
@@ -23,7 +23,7 @@ const DashboardPage = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Bu hastayı silmek istediğine emin misin?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/patients/${id}`);
+        await axios.delete(`/patients/${id}`);
         setPatients((prev) => prev.filter((p) => p._id !== id));
       } catch (error) {
         console.error("Silme hatası:", error);
